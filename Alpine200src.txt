@@ -1,0 +1,13 @@
+Alpine Source Code
+
+Alpine can be compiled using gcc 3.2.x and GNU Make. Other make utilities may work with minimal changes but other compilers (including other versions of gcc) are unlikely work. Detailed instructions are given in the BUILDING.OS2 file listed below.
+
+Before compiling Alpine, you will need to have the password emulation, ncurses, syslog and OpenSSL libraries installed. I've provided some links to all of these below. It is possible to turn off SSL support if you don't need it, or if you live in a jurisdiction that imposes controls on strong cryptography. The standard build process, however, assumes that you have OpenSSL installed.
+
+    * alpine-2.00.tar.bz2 (5.2M) -- original Alpine 2.00 source code [USA]
+    * alpine-2.00-os2-src.zip (105k) -- OS/2 source code patches [Australia]
+    * BUILDING.OS2 (2k) -- OS/2 compilation instructions [Australia]
+    * pwd2b1.zip (49k) -- OS/2 /etc/passwd emulation and utilities [Australia]
+    * ncurses-5.5-os2.zip (1.8M) -- OS/2 port of ncurses [Australia] [Poland] [Sweden] [USA]
+    * syslog3a.zip (40k) -- OS/2 port of syslog [Australia] [Poland] [Sweden] [USA]
+    * Building OpenSSL for OS/2

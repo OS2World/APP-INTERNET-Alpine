@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD><TITLE>Building OpenSSL for OS/2</TITLE>
+<META name="description" content="OpenSSL for OS/2">
+<LINK REL=StyleSheet HREF="apache.css">
+</HEAD>
+<BODY BGCOLOR="#98C4DD">
+
+<TABLE WIDTH="100%">
+  <TR ALIGN=LEFT VALIGN=MIDDLE>
+    <TD WIDTH="50%"><IMG SRC="/graphics/openssl_button.gif" ALT="OpenSSL" ALIGN=LEFT WIDTH=102 HEIGHT=47>
+    <TD ALIGN=CENTER><H1>for OS/2</H1>
+</TABLE>
+
+<HR>
+
+<H2>OpenSSL v0.9.6</H2>
+
+<P>If you need to build the <A HREF="http://www.openssl.org">OpenSSL</A> library for yourself, EG you're porting
+an application that requires SSL or other cryptography functions provided by it, all you need to do is the following.
+</P>
+
+<UL>
+  <LI>Download the official OpenSSL source code from the <A HREF="http://www.openssl.org/source/">OpenSSL web site</A>
+  <LI>Extract the source using <CODE>tar xzf openssl-0.9.6.tar.gz</CODE>
+  <LI>Delete all the 0 length files in openssl-0.9.6\include\openssl that <CODE>tar</CODE> makes in place of symlinks
+  <LI>Apply the patch <A HREF="openssl-emx.patch">openssl-emx.patch</A> in the openssl-0.9.6 directory using a unix
+      style patch program like <A HREF="http://hobbes.nmsu.edu/pub/os2/dev/util/gnupatch.zip">gnupatch.zip</A> and a
+      command line like <CODE>patch -p0 < openssl-emx.patch</CODE>
+  <LI>While still in the openssl-0.9.6 directory, run <CODE>os2\emx.cmd</CODE> to generate the makefiles. Note that
+      this requires that you have a PERL interpreter installed.
+  <LI>Run <CODE>make -f emx.mak</CODE>
+  <LI>Once finished, you'll find the libraries, test programs & the openssl.exe command line application in the 
+      <STRONG>out2</STRONG> directory. You may need to move the .a files up into the openssl-0.9.6 directory for other
+      applications to find them for linking.
+</UL>
+
+<H2>OpenSSL v0.9.7</H2>
+<P>The OpenSSL developers have commited my patches to the 0.9.7 source which allows it to build "out of the box" on
+OS/2. The source includes the file "INSTALL.OS2" which provides build instructions. However, this only
+supports EMX GCC.</P>
+
+<UL>
+  <LI><A HREF="openssl-0.9.7-watcom.patch">openssl-0.9.7-watcom.patch</A>
+      adds support for compiling using Watcom C++ v11.</LI>
+</UL>
+
+<HR><P CLASS="footer">
+This site is maintained by <A HREF="mailto:brian.havard&#64;gmail.com">Brian Havard</A>, a member of the 
+<A HREF="http://www.apache.org">Apache Software Foundation</A>
+<BR><A HREF="./">Return to Apache/2 Home<IMG SRC="/icons/back.gif" WIDTH=20 HEIGHT=22 ALT="" BORDER=0 HSPACE=10></A>
+</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,121 @@
+Alpine 2.00 for OS/2
+(C) 2006-2008 The University of Washington.
+OS/2 Port by Nicholas Sheppard (nps@zeta.org.au)
+
+
+INTRODUCTION
+============
+
+This package contains all of the files that I needed to modify to get Alpine
+compiling and running on OS/2.
+
+I have tried to follow the Unix port as closely as possible, and the Windows
+port for handling file names. There is a significant amount of OS/2-specific
+code, however.
+
+
+ON COMPILERS
+============
+
+These patches can be used to compile Alpine on OS/2 using gcc 3.2.1. Other
+3.2.x versions of gcc may also work but I have not tried them.
+
+The gcc 2.8.1 compiler distributed in the base EMX package cannot be used as
+it does not support a number of the C library functions required by Alpine.
+
+The gcc 3.3.x compilers distributed by Innotek cannot be used as they do not
+support the terminal-handling routines used by Alpine.
+
+I have not tried any non-gcc compilers.
+
+
+WHAT YOU NEED
+=============
+
+  * the original Alpine source code, available from
+    http://www.washington.edu/alpine
+
+  * my OS/2 patches, available from
+    http://www.zeta.org.au/~nps/software/alpine/en/index.html
+
+  * gcc 3.2.1, available from Hobbes and OS/2 Site
+
+  * Some form of the make utility. I used GNU Make; others may or may
+    not work.
+
+  * ncurses for OS/2, available from the ./os2/dev/util directory on your
+    favourites Hobbes mirror.
+
+  * OpenSSL for OS/2, available from http://www.openssl.org
+    (also see http://silk.apana.org.au/apache/building-ssl.html).
+    Alpine's makefile assumes that you have compiled OpenSSL as a pair
+    of DLLs.
+
+  * an /etc/passwd emulation library; my own Pwd/2 is available from
+    http://www.zeta.org.au/~nps/software/pwd2/en/index.html
+
+  * GNU patch, available from the ./os2/dev/util directory on your
+    favourite Hobbes mirror.
+
+  * Tcl/Tk 8.3.5, available from the ./os2/dev/tcl directory on your
+    favourite Hobbes mirror (this is only needed if you want to build
+    Web Alpine).
+
+
+BUILDING ALPINE
+===============
+
+1. Unpack the original sources and change to the alpine-2.00 directory:
+
+   bzip2 -d alpine-2.00.tar.bz2 [or gzip]
+   tar xvf alpine-2.00.tar
+   cd alpine-2.00
+
+2. Delete the old OS/2-dependent files from the IMAP toolkit:
+
+   attrib -r imap\* /s
+   del imap\src\osdep\os2\*
+
+3. Unpack and apply the new OS/2 patches:
+
+   unzip -o alpine-2.00-os2-src.zip
+   gpatch -p 1 < alpine-2.00-os2.patch
+
+   Make sure you are using GNU patch, not OS/2's patch.
+
+4. Open Makefile.os2 and check that the macros in the "Configuration" section
+   match your set-up. You should not need to modify anything below the
+   "config" target.
+
+5. Run "make -f Makefile.os2" to compile the executables. They will be stored
+   in the "bin" sub-directory.
+
+6. Run "make -f Makefile.os2 dist" to copy all of the support files into the
+   "bin" sub-directory. This sub-directory will now look like the binary
+   distribution and can be configured by following the instructions in
+   README.OS2
+
+
+BUILDING WEB ALPINE
+===================
+
+The following instructions are for building Web Alpine using the top-level
+Makefile.os2.
+
+1. Open web\src\Makefile.os2 and check that the macros in the "Configuration"
+   section match your set-up. You should not need to modify anything below the
+   output directories.
+
+2. Run "make -f Makefile.os2 web" to compile the executables and create the
+   Tcl/Tk scripts.
+
+3. Run "make -f Makefile.os2 web-dist" to copy all of the support files into
+   the "web" sub-directory.
+
+OTHER NOTES
+===========
+
+Some other useful targets in the top-level Makefile.os2 are:
+
+   make -f Makefile.os2 package  -- create the binary distribution packages
+   make -f Makefile.os2 clean    -- remove all of the temporary files
